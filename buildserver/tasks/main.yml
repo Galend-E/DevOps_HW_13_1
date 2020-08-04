@@ -1,16 +1,18 @@
 ---
 # tasks file for buildserver
 - name: install packages
-  apt: name={{item}} state=present
+  apt: name={{item}} state=installed
   with_items:
     - docker.io
     - docker-compose
 
 - name: copy docker-compose
-  copy: src=docker-compose.yml dest=/home/
+  copy: src=* dest=/home/
 
 - name: build docker-compose services
-  docker_compose: project_src=/home build=yes
+  docker_compose:
+    project_src: /home
+  register: output
 
 - name: push boxfuse image to docker hub
   docker_image:
