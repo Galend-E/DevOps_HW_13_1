@@ -6,13 +6,14 @@
     - docker.io
     - docker-compose
 
-- name: copy docker-compose
-  copy: src=* dest=/home/
+- name: copy dockerfile
+  copy: src=Dockerfile dest=/home/
 
-- name: build docker-compose services
-  docker_compose:
-    project_src: /home
-  register: output
+- name: build maven image
+  docker_image:
+    build:
+      path: /home
+    source: build
 
 - name: push boxfuse image to docker hub
   docker_image:
