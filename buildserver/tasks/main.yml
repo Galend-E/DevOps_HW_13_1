@@ -1,0 +1,20 @@
+---
+# tasks file for buildserver
+- name: install packages
+  apt: name={{item}} state=present
+  with_items:
+    - docker.io
+    - docker-compose
+
+- name: copy docker-compose
+  copy: src=docker-compose.yml dest=/home/
+
+- name: build docker-compose services
+  docker_compose: project_src=/home build=yes
+
+- name: push boxfuse image to docker hub
+  docker_image:
+    name: tomcat:8.0-alpine
+    repository: galend/devops_trainings:boxfuse
+    push: yes
+    source: local

@@ -1,0 +1,7 @@
+---
+- name: build java project
+  hosts: build
+  become: yes
+
+  roles:
+    - buildserver
