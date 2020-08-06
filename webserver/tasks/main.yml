@@ -1,2 +1,24 @@
 ---
 # tasks file for webserver
+- name: install packages
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+    - docker.io
+    - python3-pip
+    - python-pip
+
+- name: install docker
+  pip: name=docker state=present
+
+- name: pull docker image
+  docker_image:
+    name: galend/devops_trainings:boxfuse
+    source: pull
+
+- name: run docker container
+  docker_container:
+    name: boxfuse-prod
+    state: started
+    image: galend/devops_trainings:boxfuse
+    ports:
+      - "8080:8080"

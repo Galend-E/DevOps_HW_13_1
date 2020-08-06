@@ -5,3 +5,10 @@
 
   roles:
     - buildserver
+
+- name: deploy production boxfuse
+  hosts: web
+  become: yes
+
+  roles:
+    - webserver
