@@ -7,23 +7,22 @@
     - python3-pip
     - python-pip
 
-- name: install docker and docker-compose
-  pip: name={{item}} state=present
-  with_items:
-    - docker
-    - docker-compose
+- name: install docker
+  pip: name=docker state=present
 
-- name: copy docker files
-  copy: src=./ dest=/home/
+- name: copy files
+  copy: src=./ dest=/home/boxfuse/
 
-- name: build images
-  docker_compose:
-    project_src: /home
-    state: present
+- name: log into a docker registry
+  docker_login:
+    username: galend
+    password: Ach5keile
 
-- name: push boxfuse image to docker hub
+- name: build and push image
   docker_image:
-    name: tomcat:8.0-alpine
-    repository: galend/devops_trainings:boxfuse
+    build:
+      path: /home/boxfuse
+    name: galend/devops_trainings:boxfuse
     push: yes
-    source: local
+    source: build
+    state: present
