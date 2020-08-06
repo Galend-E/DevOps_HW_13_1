@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  maven:
+    build: maven
+    volumes:
+      - type: volume
+        source: build
+        target: /home/boxfuse-sample-java-war-hello/target
+
+  web:
+    image: tomcat:8.0-alpine
+    ports:
+      - "8081:8080"
+    volumes:
+      - type: volume
+        source: build
+        target: /usr/local/tomcat/webapps
+
+volumes:
+  build:

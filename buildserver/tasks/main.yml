@@ -2,7 +2,6 @@
 # tasks file for buildserver
 - name: install packages
   apt: name={{item}} state=present
-  update_cache: yes
   with_items:
     - docker.io
     - python-pip
@@ -14,13 +13,12 @@
     - docker-compose
 
 - name: copy dockerfile
-  copy: src=Dockerfile dest=/home/
+  copy: src=* dest=/home/
 
-- name: build maven image
-  docker_image:
-    build:
-      path: /home
-    source: build
+- name: build images
+  docker_compose:
+    project_src: /home
+    state: present
 
 - name: push boxfuse image to docker hub
   docker_image:
