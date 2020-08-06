@@ -1,9 +1,10 @@
 ---
 # tasks file for buildserver
 - name: install packages
-  apt: name={{item}} state=present
+  apt: name={{item}} state=present update_cache=yes
   with_items:
     - docker.io
+    - python3-pip
     - python-pip
 
 - name: install docker and docker-compose
@@ -12,8 +13,8 @@
     - docker
     - docker-compose
 
-- name: copy dockerfile
-  copy: src=* dest=/home/
+- name: copy docker files
+  copy: src=./ dest=/home/
 
 - name: build images
   docker_compose:
