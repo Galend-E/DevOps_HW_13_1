@@ -4,6 +4,7 @@
   become: yes
 
   roles:
+    - dockerserver
     - buildserver
 
 - name: deploy production boxfuse
@@ -11,4 +12,5 @@
   become: yes
 
   roles:
+    - dockerserver
     - webserver

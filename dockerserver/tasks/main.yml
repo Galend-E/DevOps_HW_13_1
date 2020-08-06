@@ -1,0 +1,10 @@
+---
+# tasks file for dockerserver
+- name: install packages
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+    - docker.io
+    - python3-pip
+
+- name: install docker
+  pip: name=docker state=present executable=pip3
