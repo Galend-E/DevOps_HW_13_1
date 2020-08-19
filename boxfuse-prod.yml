@@ -3,7 +3,7 @@
   hosts: localhost
   gather_facts: False
   vars:
-    keypair: key.pem
+    keypair: galkey
     instance_type: t2.micro
     security_group: galesecgrp
     image: ami-04932daa2567651e7
