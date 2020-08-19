@@ -1,4 +1,48 @@
 ---
+- name: create 2 instances
+  hosts: localhost
+  gather_facts: False
+  vars:
+    keypair: key.pem
+    instance_type: t2.micro
+    security_group: galesecgrp
+    image: ami-04932daa2567651e7
+    region: eu-central-1
+  tasks:
+    - name: add 1st instance
+      ec2:
+        key_name: "{{ keypair }}"
+        group: "{{ security_group }}"
+        instance_type: "{{ instance_type }}"
+        image: "{{ image }}"
+        wait: true
+        region: "{{ region }}"
+        assign_public_ip: yes
+      register: ec2
+
+    - name: add 1st instance to host group
+      add_host:
+        hostname: "{{ item.public_ip }}"
+        groupname: buildserver
+      loop: "{{ ec2.instances }}"
+
+    - name: add 2nd instance
+      ec2:
+        key_name: "{{ keypair }}"
+        group: "{{ security_group }}"
+        instance_type: "{{ instance_type }}"
+        image: "{{ image }}"
+        wait: true
+        region: "{{ region }}"
+        assign_public_ip: yes
+      register: ec2
+
+    - name: add 2nd instance to host group
+      add_host:
+        hostname: "{{ item.public_ip }}"
+        groupname: webserver
+      loop: "{{ ec2.instances }}"
+
 - name: build java project
   hosts: build
   become: yes
