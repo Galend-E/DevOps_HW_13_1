@@ -17,6 +17,7 @@
         image: "{{ image }}"
         wait: true
         region: "{{ region }}"
+        vpc_subnet_id: subnet-0760a07b
         assign_public_ip: yes
       register: ec2
 
@@ -34,6 +35,7 @@
         image: "{{ image }}"
         wait: true
         region: "{{ region }}"
+        vpc_subnet_id: subnet-0760a07b
         assign_public_ip: yes
       register: ec2
 
