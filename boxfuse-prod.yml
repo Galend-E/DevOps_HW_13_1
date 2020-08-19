@@ -24,7 +24,7 @@
     - name: add 1st instance to host group
       add_host:
         hostname: "{{ item.public_ip }}"
-        groupname: buildserver
+        groupname: build
       loop: "{{ ec2.instances }}"
 
     - name: add 2nd instance
@@ -42,7 +42,7 @@
     - name: add 2nd instance to host group
       add_host:
         hostname: "{{ item.public_ip }}"
-        groupname: webserver
+        groupname: web
       loop: "{{ ec2.instances }}"
 
 - name: build java project
