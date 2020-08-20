@@ -3,11 +3,11 @@
   hosts: localhost
   gather_facts: False
   vars:
-    keypair: galkey
+    keypair: ansible
     instance_type: t2.micro
-    security_group: galesecgrp
-    image: ami-04932daa2567651e7
-    region: eu-central-1
+    security_group: full_access
+    image: ami-0bbe28eb2173f6167
+    region: us-east-2
   tasks:
     - name: add 1st instance
       ec2:
@@ -17,7 +17,7 @@
         image: "{{ image }}"
         wait: true
         region: "{{ region }}"
-        vpc_subnet_id: subnet-0760a07b
+        vpc_subnet_id: subnet-62afaf18
         assign_public_ip: yes
       register: ec2
 
@@ -35,7 +35,7 @@
         image: "{{ image }}"
         wait: true
         region: "{{ region }}"
-        vpc_subnet_id: subnet-0760a07b
+        vpc_subnet_id: subnet-62afaf18
         assign_public_ip: yes
       register: ec2
 
